@@ -1,29 +1,20 @@
 import { NavLink } from 'react-router-dom';
 import { 
-  LayoutDashboard, 
   FileText, 
-  Plus, 
-  CheckCircle, 
-  Settings, 
-  Workflow,
-  BarChart3,
-  Search,
-  Bell
+  Workflow
 } from 'lucide-react';
 import { cn } from '../utils/cn';
+import { useAppStore } from '../store/useAppStore';
+import { getInitials } from '../utils/format';
 
 const navigation = [
-  { name: 'Search', href: '/search', icon: Search },
-  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Requests', href: '/requests', icon: FileText },
-  { name: 'Create Request', href: '/requests/new', icon: Plus },
-  { name: 'My Approvals', href: '/approvals', icon: CheckCircle },
   { name: 'Workflows', href: '/workflows', icon: Workflow },
-  { name: 'Analytics', href: '/analytics', icon: BarChart3 },
-  { name: 'Settings', href: '/settings', icon: Settings },
 ];
 
 export default function Sidebar() {
+  const { user } = useAppStore();
+
   return (
     <div className="sidebar">
       {/* Logo */}
@@ -52,20 +43,28 @@ export default function Sidebar() {
         </ul>
       </nav>
 
-      {/* Bottom Icons */}
-      <div className="sidebar-bottom">
-        <button className="sidebar-button">
-          <Bell className="sidebar-nav-icon" />
-        </button>
-        <button className="sidebar-button">
-          <Settings className="sidebar-nav-icon" />
-        </button>
-      </div>
-
       {/* User Profile */}
       <div className="sidebar-profile">
         <div className="sidebar-profile-avatar">
-          <span>JD</span>
+          {user?.avatar_url ? (
+            <img
+              src={user.avatar_url}
+              alt={user.name}
+              style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                const parent = target.parentElement;
+                if (parent) {
+                  const fallback = document.createElement('span');
+                  fallback.textContent = getInitials(user?.name || '');
+                  parent.appendChild(fallback);
+                }
+              }}
+            />
+          ) : (
+            <span>{getInitials(user?.name || '')}</span>
+          )}
         </div>
       </div>
     </div>

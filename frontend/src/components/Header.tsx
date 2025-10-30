@@ -1,4 +1,4 @@
-import { Bell, Search, LogOut, ChevronRight } from 'lucide-react';
+import { LogOut, ChevronRight } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 import { useLocation, Link } from 'react-router-dom';
 import { getInitials } from '../utils/format';
@@ -34,48 +34,39 @@ export default function Header() {
           ))}
         </div>
         
-        {/* Right side actions */}
-        <div className="header-actions">
-          {/* Action buttons */}
-          <button className="header-button">
-            Give Us Feedback
-          </button>
-          <button className="header-button">
-            Export
-          </button>
-          <button className="header-button">
-            Save View
-            <ChevronRight className="header-button-icon" />
-          </button>
+        {/* User Menu */}
+        <div className="user-menu">
+          {user?.avatar_url ? (
+            <img
+              src={user.avatar_url}
+              alt={user.name}
+              className="user-avatar"
+              onError={(e) => {
+                // Fallback to initials if image fails to load
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                const parent = target.parentElement;
+                if (parent) {
+                  const fallback = document.createElement('div');
+                  fallback.className = 'user-avatar';
+                  fallback.textContent = getInitials(user?.name || '');
+                  parent.appendChild(fallback);
+                }
+              }}
+            />
+          ) : (
+            <div className="user-avatar">
+              {getInitials(user?.name || '')}
+            </div>
+          )}
           
-          {/* Notifications */}
-          <button className="notification-button">
-            <Bell className="sidebar-nav-icon" />
-            <span className="notification-badge">3</span>
+          <button
+            onClick={handleLogout}
+            className="sidebar-button"
+            title="Logout"
+          >
+            <LogOut className="sidebar-nav-icon" />
           </button>
-          
-          {/* User Menu */}
-          <div className="user-menu">
-            {user?.avatar_url ? (
-              <img
-                src={user.avatar_url}
-                alt={user.name}
-                className="user-avatar"
-              />
-            ) : (
-              <div className="user-avatar">
-                {getInitials(user?.name || '')}
-              </div>
-            )}
-            
-            <button
-              onClick={handleLogout}
-              className="sidebar-button"
-              title="Logout"
-            >
-              <LogOut className="sidebar-nav-icon" />
-            </button>
-          </div>
         </div>
       </div>
     </header>

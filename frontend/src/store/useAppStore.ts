@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import type { User, ApprovalRequest, DashboardStats, RequestFilters } from '../types';
-import { mockRequests, mockDashboardStats } from '../data/mockData';
+import type { User, ApprovalRequest, RequestFilters } from '../types';
+import { mockRequests } from '../data/mockData';
 
 interface AppState {
   // User state
@@ -14,7 +14,6 @@ interface AppState {
   // Data state
   requests: ApprovalRequest[];
   filteredRequests: ApprovalRequest[];
-  dashboardStats: DashboardStats;
   
   // Filters
   filters: RequestFilters;
@@ -47,7 +46,6 @@ export const useAppStore = create<AppState>((set, get) => ({
   error: null,
   requests: mockRequests,
   filteredRequests: mockRequests,
-  dashboardStats: mockDashboardStats,
   filters: {},
   
   // Actions
@@ -107,8 +105,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     // In a real app, this would fetch data from the API
     set({ 
       requests: mockRequests, 
-      filteredRequests: mockRequests,
-      dashboardStats: mockDashboardStats 
+      filteredRequests: mockRequests
     });
   },
   
@@ -193,7 +190,6 @@ export const useAppStore = create<AppState>((set, get) => ({
 export const useUser = () => useAppStore(state => state.user);
 export const useIsAuthenticated = () => useAppStore(state => state.isAuthenticated);
 export const useRequests = () => useAppStore(state => state.filteredRequests);
-export const useDashboardStats = () => useAppStore(state => state.dashboardStats);
 export const useFilters = () => useAppStore(state => state.filters);
 export const useIsLoading = () => useAppStore(state => state.isLoading);
 export const useError = () => useAppStore(state => state.error);
