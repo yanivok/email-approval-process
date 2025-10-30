@@ -87,3 +87,5 @@ INSERT INTO notifications (id, user_id, request_id, step_id, channel, status, su
     ('cc0e8400-e29b-41d4-a716-446655440004', '550e8400-e29b-41d4-a716-446655440005', '770e8400-e29b-41d4-a716-446655440002', '880e8400-e29b-41d4-a716-446655440004', 'email', 'pending', 'New Approval Request: Laptop Purchase', 'You have a new approval request waiting for your review.', NULL),
     ('cc0e8400-e29b-41d4-a716-446655440005', '550e8400-e29b-41d4-a716-446655440006', '770e8400-e29b-41d4-a716-446655440002', '880e8400-e29b-41d4-a716-446655440004', 'email', 'pending', 'New Approval Request: Laptop Purchase', 'You have a new approval request waiting for your review.', NULL),
     ('cc0e8400-e29b-41d4-a716-446655440006', '550e8400-e29b-41d4-a716-446655440001', '770e8400-e29b-41d4-a716-446655440002', '880e8400-e29b-41d4-a716-446655440005', 'email', 'pending', 'New Approval Request: Laptop Purchase', 'You have a new approval request waiting for your review.', NULL);
+
+
