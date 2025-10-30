@@ -8,15 +8,13 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="flex">
-        <Sidebar />
-        <div className="flex-1 flex flex-col">
-          <Header />
-          <main className="flex-1 p-6">
-            {children}
-          </main>
-        </div>
+    <div className="app-container">
+      <Sidebar />
+      <div className="main-content">
+        <Header />
+        <main className="page-content">
+          {children}
+        </main>
       </div>
     </div>
   );

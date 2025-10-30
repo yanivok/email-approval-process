@@ -6,13 +6,16 @@ import {
   CheckCircle, 
   Settings, 
   Workflow,
-  BarChart3
+  BarChart3,
+  Search,
+  Bell
 } from 'lucide-react';
 import { cn } from '../utils/cn';
 
 const navigation = [
+  { name: 'Search', href: '/search', icon: Search },
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'All Requests', href: '/requests', icon: FileText },
+  { name: 'Requests', href: '/requests', icon: FileText },
   { name: 'Create Request', href: '/requests/new', icon: Plus },
   { name: 'My Approvals', href: '/approvals', icon: CheckCircle },
   { name: 'Workflows', href: '/workflows', icon: Workflow },
@@ -22,29 +25,49 @@ const navigation = [
 
 export default function Sidebar() {
   return (
-    <div className="w-64 bg-white shadow-sm border-r border-gray-200 min-h-screen">
-      <nav className="mt-8 px-4">
-        <ul className="space-y-2">
+    <div className="sidebar">
+      {/* Logo */}
+      <div className="sidebar-logo">
+        <div className="sidebar-logo-box">
+          <span className="sidebar-logo-text">h</span>
+        </div>
+      </div>
+
+      {/* Navigation Icons */}
+      <nav className="sidebar-nav">
+        <ul className="sidebar-nav-list">
           {navigation.map((item) => (
-            <li key={item.name}>
+            <li key={item.name} className="sidebar-nav-item">
               <NavLink
                 to={item.href}
                 className={({ isActive }) =>
-                  cn(
-                    'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors',
-                    isActive
-                      ? 'bg-primary-50 text-primary-700 border-r-2 border-primary-700'
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                  )
+                  cn('sidebar-nav-link', isActive && 'active')
                 }
               >
-                <item.icon className="mr-3 h-5 w-5" />
-                {item.name}
+                <item.icon className="sidebar-nav-icon" />
+                <span className="sidebar-nav-text">{item.name}</span>
               </NavLink>
             </li>
           ))}
         </ul>
       </nav>
+
+      {/* Bottom Icons */}
+      <div className="sidebar-bottom">
+        <button className="sidebar-button">
+          <Bell className="sidebar-nav-icon" />
+        </button>
+        <button className="sidebar-button">
+          <Settings className="sidebar-nav-icon" />
+        </button>
+      </div>
+
+      {/* User Profile */}
+      <div className="sidebar-profile">
+        <div className="sidebar-profile-avatar">
+          <span>JD</span>
+        </div>
+      </div>
     </div>
   );
 }

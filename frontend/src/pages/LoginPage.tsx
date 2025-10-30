@@ -16,27 +16,28 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--gray-50)', padding: '3rem 1rem' }}>
       <div className="max-w-md w-full space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="text-center text-3xl font-bold" style={{ marginTop: '1.5rem' }}>
             Sign in to your account
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="text-center text-sm" style={{ marginTop: '0.5rem', color: 'var(--gray-600)' }}>
             Email Approval Workflow System
           </p>
         </div>
         
-        <div className="mt-8 space-y-6">
+        <div style={{ marginTop: '2rem' }} className="space-y-6">
           <div>
-            <label htmlFor="user-select" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="user-select" className="label">
               Select a user to login
             </label>
             <select
               id="user-select"
               value={selectedUser}
               onChange={(e) => setSelectedUser(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+              className="input"
+              style={{ marginTop: '0.25rem' }}
             >
               <option value="">Choose a user...</option>
               {mockUsers.map((user) => (
@@ -51,17 +52,18 @@ export default function LoginPage() {
             <button
               onClick={handleLogin}
               disabled={!selectedUser}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn btn-primary"
+              style={{ width: '100%' }}
             >
               Sign in
             </button>
           </div>
         </div>
         
-        <div className="mt-6">
-          <div className="text-sm text-gray-600">
+        <div style={{ marginTop: '1.5rem' }}>
+          <div className="text-sm" style={{ color: 'var(--gray-600)' }}>
             <p className="font-medium">Demo Users:</p>
-            <ul className="mt-2 space-y-1">
+            <ul style={{ marginTop: '0.5rem' }} className="space-y-3">
               <li>• Admin User - Full access</li>
               <li>• Manager User - Can approve requests</li>
               <li>• John Doe - Regular user</li>

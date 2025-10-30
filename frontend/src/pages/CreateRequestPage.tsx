@@ -29,7 +29,7 @@ export default function CreateRequestPage() {
       status: 'draft' as const,
       priority: formData.priority,
       metadata: {},
-      due_date: formData.due_date || undefined,
+      numbersaplenty_date: formData.due_date || undefined,
     };
 
     createRequest(newRequest);
@@ -47,12 +47,12 @@ export default function CreateRequestPage() {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Create New Request</h1>
-        <p className="text-gray-600">Fill out the form below to create a new approval request.</p>
+        <h1 className="page-title">Create New Request</h1>
+        <p className="page-subtitle">Fill out the form below to create a new approval request.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="card">
+        <div className="card-white">
           <div className="space-y-4">
             <div>
               <label htmlFor="title" className="label">
@@ -81,6 +81,7 @@ export default function CreateRequestPage() {
                 onChange={handleChange}
                 rows={4}
                 className="input"
+                style={{ minHeight: '100px', resize: 'vertical' }}
                 placeholder="Provide additional details about your request"
               />
             </div>
@@ -105,7 +106,7 @@ export default function CreateRequestPage() {
               </select>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 grid-cols-md-2 gap-4">
               <div>
                 <label htmlFor="priority" className="label">
                   Priority
@@ -141,17 +142,17 @@ export default function CreateRequestPage() {
           </div>
         </div>
 
-        <div className="flex items-center justify-end space-x-4">
+        <div className="flex" style={{ gap: '1rem', justifyContent: 'flex-end' }}>
           <button
             type="button"
             onClick={() => navigate('/requests')}
-            className="btn-outline"
+            className="btn btn-outline"
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="btn-primary"
+            className="btn btn-primary"
           >
             Create Request
           </button>

@@ -1,66 +1,79 @@
-import { Bell, Search, LogOut } from 'lucide-react';
+import { Bell, Search, LogOut, ChevronRight } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
+import { useLocation, Link } from 'react-router-dom';
 import { getInitials } from '../utils/format';
 
 export default function Header() {
   const { user, setUser } = useAppStore();
+  const location = useLocation();
 
   const handleLogout = () => {
     setUser(null);
   };
 
+  // Generate breadcrumbs from path
+  const pathSegments = location.pathname.split('/').filter(Boolean);
+  const breadcrumbs = pathSegments.map((segment, index) => ({
+    name: segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' '),
+    path: '/' + pathSegments.slice(0, index + 1).join('/'),
+  }));
+
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <h1 className="text-2xl font-bold text-gray-900">Email Approval Workflow</h1>
+    <header className="header">
+      <div className="header-content">
+        {/* Breadcrumbs */}
+        <div className="breadcrumbs">
+          <span>Email Approval</span>
+          {breadcrumbs.map((crumb) => (
+            <div key={crumb.path} className="flex items-center">
+              <ChevronRight className="breadcrumb-separator" />
+              <Link to={crumb.path} className="breadcrumb-link">
+                {crumb.name}
+              </Link>
+            </div>
+          ))}
         </div>
         
-        <div className="flex items-center space-x-4">
-          {/* Search */}
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-            <input
-              type="text"
-              placeholder="Search requests..."
-              className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-            />
-          </div>
+        {/* Right side actions */}
+        <div className="header-actions">
+          {/* Action buttons */}
+          <button className="header-button">
+            Give Us Feedback
+          </button>
+          <button className="header-button">
+            Export
+          </button>
+          <button className="header-button">
+            Save View
+            <ChevronRight className="header-button-icon" />
+          </button>
           
           {/* Notifications */}
-          <button className="relative p-2 text-gray-400 hover:text-gray-600">
-            <Bell className="h-5 w-5" />
-            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-              3
-            </span>
+          <button className="notification-button">
+            <Bell className="sidebar-nav-icon" />
+            <span className="notification-badge">3</span>
           </button>
           
           {/* User Menu */}
-          <div className="flex items-center space-x-3">
-            <div className="flex items-center space-x-2">
-              {user?.avatar_url ? (
-                <img
-                  src={user.avatar_url}
-                  alt={user.name}
-                  className="h-8 w-8 rounded-full"
-                />
-              ) : (
-                <div className="h-8 w-8 rounded-full bg-primary-500 flex items-center justify-center text-white text-sm font-medium">
-                  {getInitials(user?.name || '')}
-                </div>
-              )}
-              <div className="hidden md:block">
-                <p className="text-sm font-medium text-gray-900">{user?.name}</p>
-                <p className="text-xs text-gray-500">{user?.role}</p>
+          <div className="user-menu">
+            {user?.avatar_url ? (
+              <img
+                src={user.avatar_url}
+                alt={user.name}
+                className="user-avatar"
+              />
+            ) : (
+              <div className="user-avatar">
+                {getInitials(user?.name || '')}
               </div>
-            </div>
+            )}
             
             <button
               onClick={handleLogout}
-              className="p-2 text-gray-400 hover:text-gray-600"
+              className="sidebar-button"
               title="Logout"
             >
-              <LogOut className="h-4 w-4" />
+              <LogOut className="sidebar-nav-icon" />
             </button>
           </div>
         </div>

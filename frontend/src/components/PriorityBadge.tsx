@@ -1,4 +1,4 @@
-import { getPriorityColor, getPriorityLabel } from '../utils/format';
+import { getPriorityLabel } from '../utils/format';
 import { cn } from '../utils/cn';
 
 interface PriorityBadgeProps {
@@ -6,12 +6,27 @@ interface PriorityBadgeProps {
   className?: string;
 }
 
+const getPriorityClass = (priority: number): string => {
+  switch (priority) {
+    case 1:
+      return 'priority-low';
+    case 2:
+      return 'priority-medium';
+    case 3:
+      return 'priority-high';
+    case 4:
+      return 'priority-urgent';
+    default:
+      return 'priority-medium';
+  }
+};
+
 export default function PriorityBadge({ priority, className }: PriorityBadgeProps) {
   return (
     <span
       className={cn(
-        'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
-        getPriorityColor(priority),
+        'priority-badge',
+        getPriorityClass(priority),
         className
       )}
     >
